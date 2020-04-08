@@ -1,7 +1,9 @@
+const users = require('../models/users');
+
 module.exports = {
   users: {
     signin: (req, res) => {
-      res.send('sign 성공');
+      res.send(req.body);
     },
     signup: (/* req, res */) => { },
     signout: (/* req, res */) => { },
