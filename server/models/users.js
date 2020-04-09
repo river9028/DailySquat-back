@@ -23,6 +23,73 @@ const Users = db.sequelize.define('users', {
     allowNull: false,
     defaultValue: 'N',
   },
+},
+{
+  freezeTableName: true,
+  tableName: 'users',
 });
 
-module.exports = { Users };
+
+module.exports = {
+  users: {
+    // 회원 가입
+    signup(body) {
+      return Users.sync()
+        .then(() => Users.findOne({ where: { email: body.email } }))
+        .then((data) => {
+          let result;
+          if (!data) {
+            Users.create({
+              name: body.name,
+              email: body.email,
+              age: body.age,
+              gender: body.gender,
+            });
+            result = 'success signup';
+          } else {
+            result = 'fail signup. exist email';
+          }
+          return result;
+        })
+        .catch((err) => err);
+    },
+
+    // 로그인
+    signin(body) {
+      return Users.sync()
+        .then(() => Users.findOne({ where: { email: body.email, status: 'N' } }))
+        .then((data) => {
+          let result;
+          if (data) {
+            result = { message: 'login success', id: JSON.stringify(data.id) };
+          } else {
+            result = { message: 'login fail', id: null };
+          }
+          return result;
+        })
+        .catch((err) => err);
+    },
+
+    // 회원 탈퇴
+    secession(body) {
+      return Users.sync()
+        .then(() => Users.findOne({ where: { id: body.id, status: 'N' } }))
+        .then((data) => {
+          let result;
+          if (data) {
+            Users.update({ status: 'Y' }, { where: { id: body.id } });
+            result = 'success secession';
+          } else {
+            result = 'already secession';
+          }
+          return result;
+        })
+        .catch((err) => err);
+    },
+
+    // 회원 정보 보기
+    info() {
+
+    },
+  },
+};
