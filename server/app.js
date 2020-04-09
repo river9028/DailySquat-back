@@ -38,7 +38,7 @@ app.use(compression());
 app.use('/users', userRouter);
 
 app.get('/', (req, res) => {
-  res.send('ok!!!!');
+  res.send('success');
 });
 
 app.listen(3000);
