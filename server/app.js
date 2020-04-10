@@ -9,6 +9,7 @@ const compression = require('compression');
 const app = express();
 
 const userRouter = require('./routes/users');
+const countRouter = require('./routes/count');
 
 // cors 적용
 app.use(cors());
@@ -36,6 +37,7 @@ app.use(helmet());
 app.use(compression());
 
 app.use('/users', userRouter);
+app.use('/count', countRouter);
 
 app.get('/', (req, res) => {
   res.send('success');
