@@ -1,11 +1,11 @@
 const Sequelize = require('sequelize');
 
-const password = 'root';
-// process.env.DATABASE_SPRINT_PASSWORD;
+const password = 'jaemin93';
+// const password = process.env.DATABASE_SPRINT_PASSWORD;
 
 const host = 'localhost';
 
-const sequelize = new Sequelize('chat', 'root', password, {
+const sequelize = new Sequelize('dailySquat', 'root', password, {
   host,
   dialect: 'mysql',
 });
