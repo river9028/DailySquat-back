@@ -10,6 +10,12 @@ const Users = db.sequelize.define('users', {
     allowNull: false,
     unique: true,
   },
+  // 자체 구현시 필요한 패스워드 추가
+  password: {
+    type: db.Sequelize.STRING,
+    allowNull: false,
+    unique: true,
+  },
   age: {
     type: db.Sequelize.STRING,
     allowNull: false,
@@ -35,6 +41,7 @@ module.exports = {
     // 회원 가입
     signup(body) {
       return Users.sync()
+        // findOrCreate 적용해서 수정하기
         .then(() => Users.findOne({ where: { email: body.email } }))
         .then((data) => {
           let result;
@@ -42,6 +49,8 @@ module.exports = {
             Users.create({
               name: body.name,
               email: body.email,
+              // 자체 구현시 필요한 패스워드 추가
+              password: body.password,
               age: body.age,
               gender: body.gender,
             });
@@ -57,7 +66,9 @@ module.exports = {
     // 로그인
     signin(body) {
       return Users.sync()
-        .then(() => Users.findOne({ where: { email: body.email, status: 'N' } }))
+        // .then(() => Users.findOne({ where: { email: body.email, status: 'N' } }))
+        // 자체 구현시 필요한 패스워드 추가
+        .then(() => Users.findOne({ where: { email: body.email, password: body.password, status: 'N' } }))
         .then((data) => {
           let result;
           if (data) {
