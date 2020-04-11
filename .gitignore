@@ -104,4 +104,4 @@ dist
 .tern-port
 
 # JWT secret key
-./server/config/
+./server/config/jwt.js
