@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.STRING,
   }, {});
   users.associate = function(models) {
-    // associations can be defined here
+    users.hasMany(models.count);
   };
   return users;
 };
