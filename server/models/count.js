@@ -1,35 +1,34 @@
-const db = require('../db');
-
-const Count = db.sequelize.define('count', {
-  user_id: {
-    type: db.Sequelize.STRING,
-    allowNull: false,
-  },
-  category_id: {
-    type: db.Sequelize.STRING,
-    allowNull: false,
-  },
-  count: {
-    type: db.Sequelize.STRING,
-    allowNull: false,
-  },
-},
-{
-  freezeTableName: true,
-  tableName: 'count',
-});
+const db = require('../db/models');
 
 module.exports = {
   count: {
-    insertCount(data) {
-      return Count.sync({force: true})
+    save(data) {
+      return db.sequelize.sync()
         .then(() => {
-          Count.create({
-            user_id: data.userId,
-            category_id: data.categoryId,
+          db.count.create({
+            userId: data.userId,
+            categoryId: data.categoryId,
             count: data.count,
           });
-        });
+        })
+        .then(() => 'saved')
+        .catch((err) => err);
+    },
+    get(data) {
+      return db.sequelize.sync()
+        .then(() => db.count.findAll({
+          attributes: ['count'],
+          where: {
+            userId: data.userId,
+            categoryId: data.categoryId,
+          },
+        }))
+        .then((counts) => {
+          const total = counts.map((acc) => acc.dataValues.count)
+            .reduce((acc, curr) => Number(acc) + Number(curr));
+          return total;
+        })
+        .catch((err) => err);
     },
   },
 };
