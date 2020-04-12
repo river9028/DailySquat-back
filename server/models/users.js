@@ -5,32 +5,29 @@ module.exports = {
     // 회원 가입
     signup(body) {
       let result;
-      return db.sequelize.sync()
-        .then(() => db.users.findOrCreate({
-          where: { email: body.email },
-          defaults: {
-            name: body.name,
-            email: body.email,
-            password: body.password,
-            age: body.age,
-            gender: body.gender,
-          },
-        }).spread((user, created) => {
-          if (created) {
-            result = 'signup success';
-          } else {
-            result = 'exist email';
-          }
-          return result;
-        }))
+      return db.users.findOrCreate({
+        where: { email: body.email },
+        defaults: {
+          name: body.name,
+          email: body.email,
+          password: body.password,
+          age: body.age,
+          gender: body.gender,
+        },
+      }).spread((user, created) => {
+        if (created) {
+          result = 'signup success';
+        } else {
+          result = 'exist email';
+        }
+        return result;
+      })
         .catch((err) => err);
     },
 
     // 로그인
     signin(body) {
-      return db.sequelize.sync()
-        // 자체 구현시 필요한 패스워드 추가
-        .then(() => db.users.findOne({ where: { email: body.email, password: body.password, status: 'N' } }))
+      return db.users.findOne({ where: { email: body.email, password: body.password, status: 'N' } })
         .then((data) => {
           let result;
           if (data) {
@@ -45,8 +42,7 @@ module.exports = {
 
     // 회원 탈퇴
     secession(body) {
-      return db.sequelize.sync()
-        .then(() => db.users.findOne({ where: { id: body.id, status: 'N' } }))
+      return db.users.findOne({ where: { id: body.id, status: 'N' } })
         .then((data) => {
           let result;
           if (data) {
