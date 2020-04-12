@@ -44,6 +44,11 @@ module.exports = {
       }
     },
     info: (/* req, res */) => { },
+    isDuplicate: async (req, res) => {
+      // console.log(req.params);
+      const result = await users.users.isDuplicate(req.params);
+      res.send(result);
+    },
   },
 
 };

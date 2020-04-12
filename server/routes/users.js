@@ -11,4 +11,6 @@ router.post('/secession', controller.users.secession);
 
 router.get('/info', controller.users.info);
 
+router.get('/isDuplicate/:email', controller.users.isDuplicate);
+
 module.exports = router;

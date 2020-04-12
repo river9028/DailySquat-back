@@ -64,5 +64,9 @@ module.exports = {
     info() {
 
     },
+    isDuplicate(params) {
+      return db.users.findOne({ where: { email: params.email } })
+        .then((data) => !!data);
+    },
   },
 };
