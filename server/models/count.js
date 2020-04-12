@@ -26,7 +26,6 @@ module.exports = {
         .then((counts) => {
           const total = counts.map((acc) => acc.dataValues.count)
             .reduce((acc, curr) => Number(acc) + Number(curr));
-          console.log(total);
           return total;
         })
         .catch((err) => err);
