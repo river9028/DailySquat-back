@@ -4,16 +4,25 @@ module.exports = {
   users: {
     // 회원 가입
     signup(body) {
+      let result;
       return db.sequelize.sync()
-        // 중복된 이메일이 에러 처리가 돼서 db에 저장은 안되는데, 그 다음 데이터가 저장될 때 id가 에러 처리된 만큼 띄어져서 늘어남.
-        .then(() => db.users.create({
-          name: body.name,
-          email: body.email,
-          password: body.password,
-          age: body.age,
-          gender: body.gender,
+        .then(() => db.users.findOrCreate({
+          where: { email: body.email },
+          defaults: {
+            name: body.name,
+            email: body.email,
+            password: body.password,
+            age: body.age,
+            gender: body.gender,
+          },
+        }).spread((user, created) => {
+          if (created) {
+            result = 'signup success';
+          } else {
+            result = 'exist email';
+          }
+          return result;
         }))
-        .then(() => 'success signup')
         .catch((err) => err);
     },
 
