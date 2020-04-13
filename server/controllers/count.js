@@ -18,9 +18,8 @@ module.exports = {
       }
     },
     // 1.헤더에 토큰, 2.바디에 운동 아이디를 담아 요청해야됨
-    getCount: async (req, res) => {
+    getTotalCount: async (req, res) => {
       const token = req.get('accessToken');
-      // 토큰 확인
       if (token) {
         const decoded = jwt.verify(JSON.parse(token), secretKey.key);
         const idData = {
@@ -29,6 +28,19 @@ module.exports = {
         };
         const result = await count.count.get(idData);
         res.send(JSON.stringify({ totalCount: result }));
+      }
+    },
+    // 최근 카운트
+    getRecentCount: async (req, res) => {
+      const token = req.get('accessToken');
+      if (token) {
+        const decoded = jwt.verify(JSON.parse(token), secretKey.key);
+        const idData = {
+          userId: decoded.id,
+          categoryId: req.body.categoryId,
+        };
+        const result = await count.count.recentGet(idData);
+        res.send(JSON.stringify(result.pop()));
       }
     },
   },

@@ -26,5 +26,15 @@ module.exports = {
         })
         .catch((err) => err);
     },
+    recentGet(data) {
+      return db.count.findAll({
+        attributes: ['count'],
+        where: {
+          userId: data.userId,
+          categoryId: data.categoryId,
+        },
+      })
+        .then((datas) => datas);
+    },
   },
 };
