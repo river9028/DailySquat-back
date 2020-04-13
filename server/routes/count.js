@@ -3,9 +3,9 @@ const controller = require('../controllers/count');
 
 router.post('/saveCount', controller.count.addCount);
 
-router.get('/getTotalCount', controller.count.getTotalCount);
+router.get('/getTotalCount/:categoryId', controller.count.getTotalCount);
 
-router.get('/getRecentCount', controller.count.getRecentCount);
+router.get('/getRecentCount/:categoryId', controller.count.getRecentCount);
 
 
 module.exports = router;
