@@ -22,9 +22,10 @@ module.exports = {
       const token = req.get('accessToken');
       if (token) {
         const decoded = jwt.verify(JSON.parse(token), secretKey.key);
+        // console.log('파라미터', req.params.categoryId);
         const idData = {
           userId: decoded.id,
-          categoryId: req.body.categoryId,
+          categoryId: req.params.categoryId,
         };
         const result = await count.count.get(idData);
         res.send(JSON.stringify({ totalCount: result }));
@@ -37,7 +38,7 @@ module.exports = {
         const decoded = jwt.verify(JSON.parse(token), secretKey.key);
         const idData = {
           userId: decoded.id,
-          categoryId: req.body.categoryId,
+          categoryId: req.params.categoryId,
         };
         const result = await count.count.recentGet(idData);
         res.send(JSON.stringify(result.pop()));
