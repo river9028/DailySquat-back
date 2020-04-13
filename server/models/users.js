@@ -68,8 +68,8 @@ module.exports = {
     },
 
     // 회원 정보 보기
-    info(body) {
-      return db.users.findOne({ where: { id: body.id, status: 'N' } })
+    info(token) {
+      return db.users.findOne({ where: { id: token.id, status: 'N' } })
         .then((data) => {
           let result;
           if (data) {
