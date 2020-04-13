@@ -68,8 +68,18 @@ module.exports = {
     },
 
     // 회원 정보 보기
-    info() {
-
+    info(body) {
+      return db.users.findOne({ where: { id: body.id, status: 'N' } })
+        .then((data) => {
+          let result;
+          if (data) {
+            result = data.dataValues;
+          } else {
+            result = 'fail';
+          }
+          return result;
+        })
+        .catch((err) => err);
     },
     isDuplicate(params) {
       return db.users.findOne({ where: { email: params.email } })
