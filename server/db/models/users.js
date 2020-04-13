@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     age: DataTypes.STRING,
     gender: DataTypes.STRING,
     status: DataTypes.STRING,
+    st: DataTypes.STRING,
   }, {});
   users.associate = function(models) {
     users.hasMany(models.count);

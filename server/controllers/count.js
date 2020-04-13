@@ -4,7 +4,6 @@ const secretKey = require('../config/jwt');
 
 module.exports = {
   count: {
-    // 유저 아이디, 운동 아이디, 카운트 횟수
     addCount: async (req, res) => {
       const token = req.get('accessToken');
       if (token) {

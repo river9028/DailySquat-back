@@ -40,6 +40,11 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      st: {
+        allowNull: false,
+        defaultValue: 'salt',
+        type: Sequelize.STRING
       }
     });
   },
