@@ -20,12 +20,16 @@ module.exports = {
         },
       })
         .then((counts) => {
-          if (!counts) {
+          console.log(counts);
+          let result;
+          if (counts.length !== 0) {
             const total = counts.map((acc) => acc.dataValues.count)
               .reduce((acc, curr) => Number(acc) + Number(curr));
-            return total;
+            result = total;
+          } else {
+            result = '0';
           }
-          return '0';
+          return result;
         })
         .catch((err) => err);
     },
