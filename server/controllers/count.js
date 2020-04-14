@@ -22,12 +22,12 @@ module.exports = {
       const token = req.get('accessToken');
       if (token) {
         const decoded = jwt.verify(JSON.parse(token), secretKey.key);
-        // console.log('파라미터', req.params.categoryId);
         const idData = {
           userId: decoded.id,
           categoryId: req.params.categoryId,
         };
         const result = await count.count.get(idData);
+        console.log('받아온 값! ', result);
         if (result !== '0') {
           res.send(JSON.stringify({ totalCount: result }));
         } else {
