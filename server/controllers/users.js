@@ -21,9 +21,10 @@ module.exports = {
       try {
         const token = req.get('accessToken');
         if (token) {
-          res.send('exist token');
+          console.log('로그아웃 요청', token);
+          res.json('exist token');
         } else {
-          res.send('invalid token');
+          res.json('invalid token');
         }
       } catch (err) {
         res.send(err);
@@ -35,6 +36,7 @@ module.exports = {
         if (typeof token !== 'undefined') {
           const decoded = jwt.verify(JSON.parse(token), secretKey.key);
           const result = await users.users.secession(decoded);
+          console.log('result는 :', result);
           res.send(result);
         } else {
           res.sendStatus(403);
