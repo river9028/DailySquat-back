@@ -37,6 +37,7 @@ module.exports = {
     signin(body) {
       return db.users.findOne({ where: { email: body.email, status: 'N' } })
         .then((data) => {
+          console.log('탈퇴했을 때??', data);
           let result;
           const salt = data.dataValues.st;
           const pwd = crypto.scryptSync(body.password, salt, 64).toString('hex');
@@ -48,7 +49,7 @@ module.exports = {
           }
           return result;
         })
-        .catch((err) => err);
+        .catch((err) => { console.log('탈퇴했을 때??', err); return err; });
     },
 
     // 회원 탈퇴

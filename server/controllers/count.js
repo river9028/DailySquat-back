@@ -28,7 +28,11 @@ module.exports = {
           categoryId: req.params.categoryId,
         };
         const result = await count.count.get(idData);
-        res.send(JSON.stringify({ totalCount: result }));
+        if (result !== '0') {
+          res.send(JSON.stringify({ totalCount: result }));
+        } else {
+          res.send(JSON.stringify({ totalCount: '0' }));
+        }
       }
     },
     // 최근 카운트
